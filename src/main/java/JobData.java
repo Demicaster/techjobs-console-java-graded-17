@@ -35,9 +35,9 @@ public class JobData {
         ArrayList<String> values = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
-            String aValue = row.get(field);
+            String aValue = row.get(field).toLowerCase();
 
-            if (!values.contains(aValue)) {
+            if (!values.contains(aValue.toLowerCase())) {
                 values.add(aValue);
             }
         }
@@ -73,9 +73,9 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column).toLowerCase();
 
-            if (aValue.contains(value)) {
+            if (aValue.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -95,7 +95,23 @@ public class JobData {
         loadData();
 
         // TODO - implement this method
-        return null;
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        // Breaking Arraylist into Hashmap
+        for (HashMap<String, String> row : allJobs) {
+            //Breaking Hashmap into Keys so they can be evaluated
+            for(String key: row.keySet()) {
+                //Checking if values contain the Search Term to lowercase
+                if (row.get(key).toLowerCase().contains(value.toLowerCase())) {
+                    //Checking if the job already exists
+                    if (!jobs.contains(row)) {
+                        //adding to array to return
+                        jobs.add(row);
+                    }
+                }
+            }
+        }
+        return jobs;
     }
 
     /**
